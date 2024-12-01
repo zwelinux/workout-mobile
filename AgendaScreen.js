@@ -63,7 +63,7 @@ const AgendaScreen = ({ navigation }) => {
           {items.map((item, index) => (
             <TouchableOpacity
               style={styles.list}
-              key={item.id}
+              key={item.id || index}
               onPress={() => navigation.navigate('Details', { item, items, index })}
             >
               <Text style={styles.listtext}>{item.id}+ {item.title}</Text>

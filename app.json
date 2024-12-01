@@ -4,10 +4,10 @@
     "slug": "workout-mobile",
     "version": "1.0.0",
     "orientation": "portrait",
-    "icon": "./assets/icon.png",
+    "icon": "./assets/main-logo.png",
     "userInterfaceStyle": "light",
     "splash": {
-      "image": "./assets/splash.png",
+      "image": "./assets/main-logo.png",
       "resizeMode": "contain",
       "backgroundColor": "#ffffff"
     },
@@ -16,7 +16,7 @@
     },
     "android": {
       "adaptiveIcon": {
-        "foregroundImage": "./assets/adaptive-icon.png",
+        "foregroundImage": "./assets/main-logo.png",
         "backgroundColor": "#ffffff"
       },
       "package": "com.mamaboylay.workoutmobile"
@@ -28,6 +28,13 @@
       "eas": {
         "projectId": "edd8d3bb-45b1-4d2b-ac1a-4cfb2a0fe691"
       }
-    }
+    },
+    "runtimeVersion": {
+      "policy": "appVersion"
+    },
+    "updates": {
+      "url": "https://u.expo.dev/edd8d3bb-45b1-4d2b-ac1a-4cfb2a0fe691"
+    },
+    "owner": "mamaboylay"
   }
 }

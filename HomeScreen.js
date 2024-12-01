@@ -7,48 +7,43 @@ const Stack = createNativeStackNavigator();
 
 function HomeScreen({ navigation }) {
   return (
-    <ImageBackground
-      source={{ uri: 'https://pbs.twimg.com/media/FYXyWNHXwAARWEP?format=png&name=900x900' }} 
-      style={styles.background}
-    >
+
     <ScrollView style={styles.container}>
-      <View style={styles.content}>
 
-        <Image
-          source={{ uri: 'https://th.bing.com/th/id/R.3bbace4913a21927a44e564fd73c51bd?rik=i8NZ25eXHNRQKQ&riu=http%3a%2f%2fpluspng.com%2fimg-png%2fcouch-potato-png-hd-couch-potato-13-png-1535.png&ehk=RR9OyPpbuhWMaPD%2fw0a2JiBfDoAfde6r3xYyVxhtN8w%3d&risl=&pid=ImgRaw&r=0' }}
+      <Image
+        source={{ uri: 'https://th.bing.com/th/id/R.3bbace4913a21927a44e564fd73c51bd?rik=i8NZ25eXHNRQKQ&riu=http%3a%2f%2fpluspng.com%2fimg-png%2fcouch-potato-png-hd-couch-potato-13-png-1535.png&ehk=RR9OyPpbuhWMaPD%2fw0a2JiBfDoAfde6r3xYyVxhtN8w%3d&risl=&pid=ImgRaw&r=0' }}
           style={styles.image}
-        />
+      />
 
-        <Text style={styles.title}>
-          COUCH POTATO
-        </Text>
-        <Text style={styles.description}>
+      <View style={styles.content}>
+          
+        <View>
+          <Text style={styles.title}>
+            COUCH POTATO
+          </Text>
+          <Text style={styles.description}>
+            Simply Workout At Home 
+          </Text>
+        </View>
+            
+        <View style={styles.buttonGroup}>
+          <TouchableOpacity style={styles.button} onPress={() => navigation.navigate('Agendas')}>
+            <Text style={styles.buttonText}>Start Now</Text>
+          </TouchableOpacity>
 
-          အာလူးလေးတို့ အတွက် အိမ်မှာနေရင်း 
-        </Text>
-        <Text style={styles.description}>
+          <TouchableOpacity style={styles.button2} onPress={() => navigation.navigate('Agendas')}>
+            <Text style={styles.buttonText2}>App Info</Text>
+          </TouchableOpacity>
+        </View>
 
-          လှုပ်ရှားမှုလေးတွေလုပ်လို့ရနိုင်မဲ့ 
-        </Text>
-        <Text style={styles.description}>
+        <View style={styles.versionContainer}>
+          <Text style={styles.version}>v1.1.2</Text>
+        </View>
 
-        Home Workout App
-        </Text>
+
       </View>
 
-      <View style={styles.footer}>
-        <TouchableOpacity style={styles.button} onPress={() => navigation.navigate('Agendas')}>
-          <Text style={styles.buttonText}> စတင်မည် </Text>
-        </TouchableOpacity>
-      </View>
-
-      <View>
-        <Text style={styles.version}>
-          v1.1.0
-        </Text>
-      </View>
     </ScrollView>
-    </ImageBackground>
   );
 };
 
@@ -61,11 +56,7 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: '#ebb268',
-    paddingTop: 45,
-  },
-  content: {
-    alignItems: 'center',
-    padding: 20,
+    paddingTop: 70,
   },
   image: {
     width: '100%',
@@ -73,38 +64,62 @@ const styles = StyleSheet.create({
     borderRadius: 10,
     marginBottom: 50,
   },
+  content: {
+    padding: 20,
+  },
   title: {
     fontSize: 30,
     fontWeight: 'bold',
-    marginBottom: 30,
+    marginBottom: 0,
     color: '#2d2d2d',
+    textAlign: 'center',
   },
   description: {
-    fontSize: 16,
+    fontSize: 20,
     color: '#3d3d3d',
     textAlign: 'center',
-    paddingHorizontal: 20,
+    marginTop: 10,
   },
-  version: {
-    fontSize: 12,
-    color: '#2d2d2d',
-    textAlign: 'center',
-  },
-  footer: {
-    flexDirection: 'row',
-    justifyContent: 'space-around',
-    padding: 20,
-    backgroundColor: '#ebb268',
+  buttonGroup: {  
+    alignItems: 'center',
+    marginTop: 30,
   },
   button: {
     padding: 10,
+    width: 300,
     backgroundColor: 'darkred',
-    borderRadius: 30,
-    width: 100,
+    borderRadius: 10,
+    textAlign: 'center',
+    marginBottom: 10,
+  },
+  button2: {
+    padding: 10,
+    width: 300,
+    backgroundColor: 'white',
+    borderRadius: 10,
+    textAlign: 'center',
+    marginBottom: 10,
   },
   buttonText: {
     color: '#fff',
-    fontSize: 16,
+    fontSize: 17,
+    textAlign: 'center',
+  },
+  buttonText2: {
+    color: '#2d2d2d',
+    fontSize: 17,
+    textAlign: 'center',
+  },
+  versionContainer: {
+    position: 'absolute',
+    bottom: 0,
+    left: 0,
+    right: 0,
+    alignItems: 'center',
+  },
+  version: {
+    fontSize: 14,
+    color: '#2d2d2d',
     textAlign: 'center',
   },
 });
