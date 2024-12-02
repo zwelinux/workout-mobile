@@ -27,17 +27,17 @@ function HomeScreen({ navigation }) {
         </View>
             
         <View style={styles.buttonGroup}>
-          <TouchableOpacity style={styles.button} onPress={() => navigation.navigate('Agendas')}>
+          <TouchableOpacity style={styles.button} onPress={() => navigation.navigate('Start Now')}>
             <Text style={styles.buttonText}>Start Now</Text>
           </TouchableOpacity>
 
-          <TouchableOpacity style={styles.button2} onPress={() => navigation.navigate('Agendas')}>
+          <TouchableOpacity style={styles.button2} onPress={() => navigation.navigate('App Info')}>
             <Text style={styles.buttonText2}>App Info</Text>
           </TouchableOpacity>
         </View>
 
         <View style={styles.versionContainer}>
-          <Text style={styles.version}>v1.1.2</Text>
+          <Text style={styles.version}>v1.1.2 stable</Text>
         </View>
 
 
@@ -55,7 +55,6 @@ const styles = StyleSheet.create({
   },
   container: {
     flex: 1,
-    backgroundColor: '#ebb268',
     paddingTop: 70,
   },
   image: {
@@ -87,7 +86,7 @@ const styles = StyleSheet.create({
   button: {
     padding: 10,
     width: 300,
-    backgroundColor: 'darkred',
+    backgroundColor: 'black',
     borderRadius: 10,
     textAlign: 'center',
     marginBottom: 10,
@@ -95,10 +94,12 @@ const styles = StyleSheet.create({
   button2: {
     padding: 10,
     width: 300,
-    backgroundColor: 'white',
+    backgroundColor: '#fff',
     borderRadius: 10,
     textAlign: 'center',
     marginBottom: 10,
+    borderColor: '#7f7f7f',
+    borderWidth: 0.5,
   },
   buttonText: {
     color: '#fff',
