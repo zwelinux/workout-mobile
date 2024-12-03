@@ -1,31 +1,28 @@
-// App.js
 import React from 'react';
-import { View, Text, Image, StyleSheet, TouchableOpacity, ScrollView, ImageBackground } from 'react-native';
-import { createNativeStackNavigator } from '@react-navigation/native-stack';
+import { StyleSheet, Text, View, Image, TouchableOpacity } from 'react-native';
 
-const Stack = createNativeStackNavigator();
-
-function HomeScreen({ navigation }) {
+function StartNowScreen({ navigation }) {
   return (
+    <View style={styles.container}>
+      <View style={styles.mainPlaceHolder2}>
+        <View style={styles.mainPlaceHolder}>
 
-    <ScrollView style={styles.container}>
-
-      <Image
-        source={{ uri: 'https://th.bing.com/th/id/R.3bbace4913a21927a44e564fd73c51bd?rik=i8NZ25eXHNRQKQ&riu=http%3a%2f%2fpluspng.com%2fimg-png%2fcouch-potato-png-hd-couch-potato-13-png-1535.png&ehk=RR9OyPpbuhWMaPD%2fw0a2JiBfDoAfde6r3xYyVxhtN8w%3d&risl=&pid=ImgRaw&r=0' }}
-          style={styles.image}
-      />
-
-      <View style={styles.content}>
-          
-        <View>
-          <Text style={styles.title}>
-            COUCH POTATO
-          </Text>
-          <Text style={styles.description}>
-            Simply Workout At Home 
-          </Text>
+        <View style={styles.headerGroup}>
+          <Text style={styles.title}>POTATA</Text>
+          <Text style={styles.description}>Simply Workout At Home</Text>
         </View>
-            
+          
+        <Image
+          source={require('./assets/couch_potato.png')} 
+          style={styles.image}
+        />
+
+
+        </View>
+      </View>
+
+      <View style={styles.secondryPlaceHolder}>
+
         <View style={styles.buttonGroup}>
           <TouchableOpacity style={styles.button} onPress={() => navigation.navigate('Start Now')}>
             <Text style={styles.buttonText}>Start Now</Text>
@@ -36,63 +33,78 @@ function HomeScreen({ navigation }) {
           </TouchableOpacity>
         </View>
 
-        <View style={styles.versionContainer}>
-          <Text style={styles.version}>v1.1.2 stable</Text>
-        </View>
-
+        <Text style={styles.smallText}>v1.1.2 Stable</Text>
 
       </View>
-
-    </ScrollView>
+    </View>
   );
-};
+}
 
 const styles = StyleSheet.create({
-  background: {
-    width: '100%',
-    height: '100%',
-    resizeMode: 'contain',
-  },
   container: {
-    flex: 1,
-    paddingTop: 70,
+    flex: 1, // Takes the full screen
+    backgroundColor: '#fff',
+  },
+  mainPlaceHolder2: {
+    width: '100%',
+    flex: 2.8, // Takes 75% of the screen
+    backgroundColor: '#E5CACA',
+    borderBottomLeftRadius: 40, // Rounded bottom-left corner
+    borderBottomRightRadius: 40, // Rounded bottom-right corner
+  },
+  mainPlaceHolder: {
+    width: '100%',
+    height: '98%',
+    backgroundColor: '#9380FF',
+    // justifyContent: 'center', // Vertically centers the cards
+    // alignItems: 'center', // Horizontally centers the cards
+    borderBottomLeftRadius: 40, // Rounded bottom-left corner
+    borderBottomRightRadius: 40, // Rounded bottom-right corner
+  },
+  headerGroup: {
+    marginTop: 80,
   },
   image: {
     width: '100%',
     height: 400,
     borderRadius: 10,
-    marginBottom: 50,
+    marginTop: 55,
   },
-  content: {
-    padding: 20,
+  secondryPlaceHolder: {
+    flex: 1.2, // Takes 25% of the screen
+    // backgroundColor: '#fff',
+    justifyContent: 'center', // Vertically centers the content
+    alignItems: 'center',
+    padding: 20, // Add padding to space out the text
   },
   title: {
-    fontSize: 30,
+    fontSize: 28,
     fontWeight: 'bold',
     marginBottom: 0,
-    color: '#2d2d2d',
+    color: '#fff',
     textAlign: 'center',
   },
   description: {
-    fontSize: 20,
-    color: '#3d3d3d',
+    fontSize: 22,
+    color: '#efefef',
     textAlign: 'center',
     marginTop: 10,
   },
-  buttonGroup: {  
+  buttonGroup: {
     alignItems: 'center',
-    marginTop: 30,
+    marginTop: 50,
   },
   button: {
-    padding: 10,
+    padding: 13,
+    height: 50,
     width: 300,
     backgroundColor: 'black',
     borderRadius: 10,
-    textAlign: 'center',
     marginBottom: 10,
   },
   button2: {
-    padding: 10,
+    padding: 13,
+    height: 50,
     width: 300,
     backgroundColor: '#fff',
     borderRadius: 10,
@@ -111,18 +123,22 @@ const styles = StyleSheet.create({
     fontSize: 17,
     textAlign: 'center',
   },
-  versionContainer: {
-    position: 'absolute',
-    bottom: 0,
-    left: 0,
-    right: 0,
-    alignItems: 'center',
+  header1: {
+    fontSize: 24,
+    fontWeight: 'bold',
+    color: '#333',
   },
-  version: {
-    fontSize: 14,
-    color: '#2d2d2d',
-    textAlign: 'center',
+  header2: {
+    fontSize: 18,
+    fontWeight: '600',
+    color: '#555',
+    marginTop: 5, // Space between header1 and header2
+  },
+  smallText: {
+    fontSize: 12,
+    color: '#888', // Lighter color for smaller text
+    marginTop: 30, // Space to push it towards the bottom
   },
 });
 
-export default HomeScreen;
+export default StartNowScreen;

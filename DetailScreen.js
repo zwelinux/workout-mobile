@@ -1,23 +1,44 @@
-import React from 'react';
-import { View, Text, TouchableOpacity, ScrollView, Image, StyleSheet } from 'react-native';
+import React, { useState, useEffect } from 'react';
+import { StyleSheet, Text, View, Image, TouchableOpacity, Dimensions } from 'react-native';
+import MaterialCommunityIcons from '@expo/vector-icons/MaterialCommunityIcons';
+import { ProgressBar } from 'react-native-paper';
+import Ionicons from '@expo/vector-icons/Ionicons';
 
-const DetailScreen = ({ route, navigation }) => {
+const { width } = Dimensions.get('window');
 
-  const { item, items, index } = route.params;
+function DetailScreen({ route, navigation }) {
+  const { items, index: initialIndex } = route.params;
+  const [currentIndex, setCurrentIndex] = useState(initialIndex);
+  const [progress, setProgress] = useState(0);
+  const [percentage, setPercentage] = useState(0);
+  const [backgroundColor, setBackgroundColor] = useState('#656565'); // Default background color
+
+  useEffect(() => {
+    const totalItems = items.length;
+    const currentPercentage = ((currentIndex + 1) / totalItems) * 100;
+
+    setProgress((currentIndex + 1) / totalItems);
+    setPercentage(currentPercentage);
+
+    // Change background color to blue if on the last item
+    if (currentIndex === totalItems - 1) {
+      setBackgroundColor('#656565'); 
+    } else {
+      setBackgroundColor('#9380FF'); 
+    }
+  }, [currentIndex, items.length]);
 
   const goToNextItem = () => {
-    const nextIndex = index + 1;
+    const nextIndex = currentIndex + 1;
     if (nextIndex < items.length) {
-      const nextItem = items[nextIndex];
-      navigation.replace('Detail', { item: nextItem, items, index: nextIndex });
+      setCurrentIndex(nextIndex);
     }
   };
 
   const goToPreviousItem = () => {
-    const previousIndex = index - 1;
+    const previousIndex = currentIndex - 1;
     if (previousIndex >= 0) {
-      const previousItem = items[previousIndex];
-      navigation.replace('Detail', { item: previousItem, items, index: previousIndex });
+      setCurrentIndex(previousIndex);
     }
   };
 
@@ -26,131 +47,174 @@ const DetailScreen = ({ route, navigation }) => {
   };
 
   const formatTitle = (title, name, maxLength = 25) => {
-    const combinedText = [title, name].filter(Boolean).join(' '); // Join only defined values
+    const combinedText = [title, name].filter(Boolean).join(' ');
     return combinedText.length > maxLength ? combinedText.substring(0, maxLength - 3) + '...' : combinedText;
   };
 
-  const isFirstItem = index === 0;
-  const isLastItem = index === items.length - 1;
+  const isFirstItem = currentIndex === 0;
+  const isLastItem = currentIndex === items.length - 1;
+
+  const currentItem = items[currentIndex];
 
   return (
-    <ScrollView style={styles.container}>
-      <View style={styles.content}>
-        <View style={styles.header}>
-          {/* <Text style={styles.headerh1}>{item.title} {item.name}</Text> */}
+    <View style={styles.container}>
+      <View style={[styles.mainPlaceHolder2, { backgroundColor }]}>
+        <View style={[styles.mainPlaceHolder, { backgroundColor }]}>
+          {/* Header View */}
+          <View style={styles.header}>
+            <View style={styles.headerTextGroup}>
+              <Text style={styles.headerText}>POTATA</Text>
+              <Text style={styles.secondaryHeaderText}>Full Body Workout</Text>
+            </View>
+          </View>
 
-          <Text style={styles.headerh1}>
-            {formatTitle(item?.title, item?.name)}
-          </Text>
+          {/* Body View */}
+          <View style={styles.body}>
+            {/* Image Placeholder */}
+            <View style={styles.imagePlaceHolder}>
+              <Image 
+                source={require('./assets/detail.png')} 
+                style={styles.image} 
+              />
+            </View>
 
-        </View>
+            {/* Info Placeholder */}
+            <View style={styles.infoPlaceHolder}>
+              <View style={styles.infoPlaceHolderTextGroup}>
+                <Text style={styles.bodyText}>{formatTitle(currentItem?.title, currentItem?.name)}</Text>
+                <Text style={styles.secondaryBodyText}>{currentItem.type}</Text>
+              </View>
 
-        <Image
-          source={{ uri: 'https://th.bing.com/th/id/R.3bbace4913a21927a44e564fd73c51bd?rik=i8NZ25eXHNRQKQ&riu=http%3a%2f%2fpluspng.com%2fimg-png%2fcouch-potato-png-hd-couch-potato-13-png-1535.png&ehk=RR9OyPpbuhWMaPD%2fw0a2JiBfDoAfde6r3xYyVxhtN8w%3d&risl=&pid=ImgRaw&r=0' }}
-          style={styles.image}
-        />
-
-        {/* <Text style={styles.title}>{item.title}</Text> */}
-        <Text style={styles.headerh2}>x {item.time} Times</Text>
-        {/* <Text style={styles.subtitle}>HELLO FROM THE OTHER SIDE</Text> */}
-
-        <View style={styles.footer}>
-          {!isFirstItem && (
-            <TouchableOpacity style={[styles.button, { marginRight: 15 }]} onPress={goToPreviousItem}>
-              <Text style={styles.buttonText}>Prev</Text>
-            </TouchableOpacity>
-          )}
-
-          {!isLastItem && (
-            <TouchableOpacity style={[styles.button, { marginLeft: 15 }]} onPress={goToNextItem}>
-              <Text style={styles.buttonText}>Next</Text>
-            </TouchableOpacity>
-          )}
-          
-          {isLastItem && (
-            <TouchableOpacity style={[styles.button, { marginLeft: 15 }]} onPress={goToHome}>
-              <Text style={styles.buttonText}>Home</Text>
-            </TouchableOpacity>
-          )}
+              {isLastItem ? (
+                <TouchableOpacity style={[styles.button, { marginLeft: 15 }]} onPress={goToHome}>
+                  <Ionicons name="checkmark-done-circle-sharp" size={70} color="white" />
+                </TouchableOpacity>
+              ) : (
+                <TouchableOpacity style={styles.homeIcon} onPress={goToNextItem}>
+                  <MaterialCommunityIcons name="skip-next-circle" size={70} color="white" />
+                </TouchableOpacity>
+              )}
+            </View>
+          </View>
         </View>
       </View>
-    </ScrollView>
+
+      <View style={styles.secondryPlaceHolder}>
+        <Text style={styles.percentageText}>{Math.round(percentage)}%</Text>
+        <View style={styles.progressBarContainer}>
+          <ProgressBar
+            progress={progress}
+            color="red"
+            style={styles.progressBar}
+          />
+        </View>
+      </View>
+    </View>
   );
-};
+}
 
 const styles = StyleSheet.create({
   container: {
-    // backgroundColor: '#ebb268',
     flex: 1,
-    paddingHorizontal: 20,  // Added horizontal padding for better spacing
+    backgroundColor: '#fff',
   },
-  content: {
-    justifyContent: 'center',
-    alignItems: 'center',
-    marginTop: 30,  // Reduced top margin for better alignment
+  mainPlaceHolder2: {
+    width: '100%',
+    flex: 3.4,
+    borderBottomLeftRadius: 40,
+    borderBottomRightRadius: 40,
+  },
+  mainPlaceHolder: {
+    width: '100%',
+    height: '98.5%',
+    borderBottomLeftRadius: 40,
+    borderBottomRightRadius: 40,
   },
   header: {
+    height: '20%',
+    width: '100%',
+    flexDirection: 'row',
+    justifyContent: 'space-between',
     alignItems: 'center',
-    marginBottom: 20,  // Added space below the header for separation
+    paddingTop: 40,
+    paddingLeft: 30,
+    paddingRight: 30,
   },
-  headerh1: {
-    fontSize: 25,  // Slightly larger title
-    fontWeight: 'bold',
-    color: '#2d2d2d',
-    marginBottom: 5,
-    textAlign: 'center'
+  headerTextGroup: {
+    flexDirection: 'column',
+    alignItems: 'flex-start',
   },
-  headerh2: {
-    fontSize: 25, 
-    color: '#3d3d3d',
+  headerText: {
+    fontSize: 20,
     fontWeight: 'bold',
-    marginBottom: 20,  // Adjusted for proper spacing
+    color: '#fff',
+    textAlign: 'left',
+  },
+  secondaryHeaderText: {
+    fontSize: 18,
+    color: '#fff',
+    textAlign: 'left',
+    marginTop: 3,
+  },
+  body: {
+    height: '80%',
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  imagePlaceHolder: {
+    height: '80%',
+    width: '100%',
+    justifyContent: 'center',
+    alignItems: 'center',
   },
   image: {
+    width: width * 0.75,
+    resizeMode: 'contain',
+  },
+  infoPlaceHolder: {
+    height: '20%',
     width: '100%',
-    height: 350,  // Slightly reduced height for better visual balance
-    resizeMode: 'contain',  // Ensures the image scales without distortion
-    marginBottom: 20,
-  },
-  title: {
-    fontSize: 26,  // Adjusted title font size for a cleaner look
-    textAlign: 'center',
-    marginBottom: 15,
-    fontWeight: '600',
-    color: '#333',
-  },
-  subtitle: {
-    fontSize: 18,  // Adjusted subtitle size for better readability
-    color: '#555',
-    textAlign: 'center',
-    marginBottom: 20,
-  },
-  footer: {
     flexDirection: 'row',
-    justifyContent: 'center',
-    marginTop: 25,  // Increased space between content and footer
-    width: '100%',
-  },
-  button: {
-    paddingVertical: 12,  // Slightly reduced padding for a more compact button
-    paddingHorizontal: 30,
-    backgroundColor: 'darkred',
-    borderRadius: 30,
+    justifyContent: 'space-between',
     alignItems: 'center',
-    justifyContent: 'center',
-    elevation: 5,
-    marginHorizontal: 10,  // Consistent spacing between buttons
+    paddingLeft: 30,
+    paddingRight: 30,
   },
-  buttonText: {
+  infoPlaceHolderTextGroup: {
+    flexDirection: 'column',
+    alignItems: 'flex-start',
+  },
+  bodyText: {
+    fontSize: 20,
+    fontWeight: '600',
     color: '#fff',
-    fontSize: 16,  // Slightly reduced font size for balance
-    fontWeight: '500',
   },
-  buttonPress: {
-    backgroundColor: '#b20000',
-  }
+  secondaryBodyText: {
+    fontSize: 18,
+    fontWeight: '300',
+    color: '#fff',
+  },
+  secondryPlaceHolder: {
+    flex: 0.5,
+    backgroundColor: '#fff',
+    justifyContent: 'center',
+    alignItems: 'center',
+    paddingBottom: 10,
+  },
+  progressBarContainer: {
+    width: '80%',
+    marginTop: 20,
+  },
+  progressBar: {
+    height: 10,
+    borderRadius: 5,
+  },
+  percentageText: {
+    fontSize: 18,
+    fontWeight: 'bold',
+    color: '#2d2d2d',
+    marginTop: 10,
+  },
 });
-
-
 
 export default DetailScreen;

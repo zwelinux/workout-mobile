@@ -32,26 +32,26 @@ export default function App() {
         <Stack.Screen
           name="Start Now"
           component={StartNowScreen}
-          options={{ headerShown: true }}
+          options={{ headerShown: false }}
         />
         
         {/* Sub-navigation for Start Now */}
         <Stack.Screen
           name="Full Body Workout"
           component={FullBodyWorkoutScreen}
-          options={{ headerShown: true }}
+          options={{ headerShown: false }}
         />
         
         <Stack.Screen
           name="Couch Potato"
           component={CouchPotatoScreen}
-          options={{ headerShown: true }}
+          options={{ headerShown: false }}
         />
         
         <Stack.Screen
           name="Yoga"
           component={YogaScreen}
-          options={{ headerShown: true }}
+          options={{ headerShown: false }}
         />
         
         {/* App Info Screen and its sub-navigation */}
@@ -89,7 +89,7 @@ export default function App() {
         <Stack.Screen
           name="Detail"
           component={DetailScreen}
-          options={{ headerShown: true }}
+          options={{ headerShown: false }}
         />
       </Stack.Navigator>
     </NavigationContainer>

@@ -1,13 +1,16 @@
 import React, { useEffect, useState } from 'react';
 import { View, Text, TouchableOpacity, ScrollView, ActivityIndicator, StyleSheet } from 'react-native';
+import { Ionicons } from '@expo/vector-icons'; // Importing Ionicons for the icon
 
-const CouchPotatoScreen = ({ navigation }) => {
+
+function YogaScreen({ navigation }) {
+
   const [items, setItems] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
   const apiKey = 'e4b2Ql3bncubuJiUf901gQ==sUTKSzcH7sIp9lI4'; // Your API key
-  const apiUrl = 'https://api.api-ninjas.com/v1/exercises?difficulty=intermediate'; // API URL
+  const apiUrl = 'https://api.api-ninjas.com/v1/exercises?difficulty=expert'; // API URL
 
   useEffect(() => {
     fetch(apiUrl, {
@@ -32,101 +35,191 @@ const CouchPotatoScreen = ({ navigation }) => {
       });
   }, []);
 
+
   if (loading) {
     return (
-      <View style={styles.container}>
-        <View style={styles.content}>
-          <View style={styles.header}>
-          <Text style={styles.headerh1}>Yoga</Text>
-          <Text style={styles.headerh2}>Beginner Friendly</Text>
+    <View style={styles.container}>
+      <View style={styles.mainPlaceHolder}>
+        <View style={styles.headerPlaceHolder}>
+          {/* Grouped header content */}
+          <View style={styles.headerTextGroup}>
+            {/* Main Header */}
+            <Text style={styles.headerText}>POTATA</Text>
+            {/* Secondary Header */}
+            <Text style={styles.secondaryHeaderText}>Yoga Everyday</Text>
           </View>
-          <TouchableOpacity style={styles.button} onPress={() => navigation.navigate('Home')}>
-            <Text style={styles.buttonText}>Home</Text>
+
+          {/* Home Icon */}
+          <TouchableOpacity onPress={() => navigation.navigate('Home')} style={styles.homeIcon}>
+            <Ionicons name="home" size={25} color="#fff" />
           </TouchableOpacity>
-          <Text style={styles.loadingText}>Loading, Please Wait...</Text>
+        </View>
+        <View style={styles.contentPlaceHolder}>
+
           <ActivityIndicator size="large" color="darkred" />
+          <Text style={styles.contentText}>Loading . . . </Text>
+
         </View>
       </View>
+      <View style={styles.secondryPlaceHolder}>
+        {/* <TouchableOpacity
+          style={styles.button}
+          onPress={() => {
+            if (items.length > 0) {
+              navigation.navigate('Detail', { item: items[0], items, index: 0 });
+            } else {
+              alert('No data available to navigate.');
+            }
+          }}
+        >
+          <Text style={styles.buttonText}>Start Now</Text>
+        </TouchableOpacity> */}
+      </View>
+    </View>
     );
   }
 
   if (error) {
     return (
       <View style={styles.container}>
-        <View style={styles.content}>
-          <Text style={styles.errorText}>An error occurred. Please try again.</Text>
+      <View style={styles.mainPlaceHolder}>
+        <View style={styles.headerPlaceHolder}>
+          {/* Grouped header content */}
+          <View style={styles.headerTextGroup}>
+            {/* Main Header */}
+            <Text style={styles.headerText}>POTATA</Text>
+            {/* Secondary Header */}
+            <Text style={styles.secondaryHeaderText}>Yoga Everyday</Text>
+          </View>
+
+          {/* Home Icon */}
+          <TouchableOpacity onPress={() => navigation.navigate('Home')} style={styles.homeIcon}>
+            <Ionicons name="home" size={25} color="#fff" />
+          </TouchableOpacity>
+        </View>
+        <View style={styles.contentPlaceHolder}>
+
+          <ActivityIndicator size="large" color="darkred" />
+          <Text style={styles.contentText}>Error Loading Data</Text>
+
         </View>
       </View>
+      <View style={styles.secondryPlaceHolder}>
+        {/* <TouchableOpacity
+          style={styles.button}
+          onPress={() => {
+            if (items.length > 0) {
+              navigation.navigate('Detail', { item: items[0], items, index: 0 });
+            } else {
+              alert('No data available to navigate.');
+            }
+          }}
+        >
+          <Text style={styles.buttonText}>Start Now</Text>
+        </TouchableOpacity> */}
+      </View>
+    </View>
     );
   }
 
   return (
     <View style={styles.container}>
-      <View style={styles.header}>
-        <Text style={styles.headerh1}>Yoga</Text>
-        <Text style={styles.headerh2}>Beginner Friendly</Text>
+      <View style={styles.mainPlaceHolder}>
+        <View style={styles.headerPlaceHolder}>
+          {/* Grouped header content */}
+          <View style={styles.headerTextGroup}>
+            {/* Main Header */}
+            <Text style={styles.headerText}>POTATA</Text>
+            {/* Secondary Header */}
+            <Text style={styles.secondaryHeaderText}>Yoga Everyday</Text>
+          </View>
 
-        <TouchableOpacity style={styles.button} onPress={() => navigation.navigate('Home')}>
-          <Text style={styles.buttonText}>Home</Text>
-        </TouchableOpacity>
+          {/* Home Icon */}
+          <TouchableOpacity onPress={() => navigation.navigate('Home')} style={styles.homeIcon}>
+            <Ionicons name="home" size={25} color="#fff" />
+          </TouchableOpacity>
+        </View>
+        <View style={styles.contentPlaceHolder}>
+          {/* Add content here */}
+
+          <View style={styles.scrollContainer}>
+            <ScrollView contentContainerStyle={styles.scrollViewContent}>
+              {/* {items.map((item, index) => (
+                <TouchableOpacity
+                  style={styles.list}
+                  key={item.id || index}
+                  onPress={() => navigation.navigate('Detail', { item, items, index })}
+                >
+                  <Text style={styles.listtext}>{item.id}+ {item.title}</Text>
+                </TouchableOpacity>
+              ))} */}
+
+              {items.map((item, index) => (
+                <TouchableOpacity
+                  style={styles.list}
+                  key={item.id || index}
+                >
+                  <Text style={styles.listtext}>{item.id}+ {item.name}</Text>
+                </TouchableOpacity>
+              ))}
+            </ScrollView>
+          </View>
+
+        </View>
       </View>
-
-      <View style={styles.scrollContainer}>
-        <ScrollView contentContainerStyle={styles.scrollViewContent}>
-          {items && items.length > 0 ? (
-            items.map((item, index) => (
-              <TouchableOpacity
-                style={styles.list}
-                key={item.id || index}
-                onPress={() => navigation.navigate('Detail', { item, items, index })}
-              >
-                <Text style={styles.listtext}>{item.id}+ {item.name}</Text>
-              </TouchableOpacity>
-            ))
-          ) : (
-            <Text style={styles.errorText}>No exercises found</Text>
-          )}
-        </ScrollView>
+      <View style={styles.secondryPlaceHolder}>
+        {/* StartNow Button */}
+        <TouchableOpacity
+          style={styles.button}
+          onPress={() => {
+            if (items.length > 0) {
+              navigation.navigate('Detail', { item: items[0], items, index: 0 });
+            } else {
+              alert('No data available to navigate.');
+            }
+          }}
+        >
+          <Text style={styles.buttonText}>Start Now</Text>
+        </TouchableOpacity>
       </View>
     </View>
   );
-};
+}
 
 const styles = StyleSheet.create({
   container: {
-    // backgroundColor: '#ebb268',
-    flex: 1,
+    flex: 1,          // Takes the full height of the screen
+    width: '100%',    // Full width of the screen
+    height: '100%',   // Full height of the screen
+    backgroundColor: '#9380FF', // Background color for the container
   },
-  content: {
+  mainPlaceHolder: {
+    flex: 3.5,       
+    backgroundColor: '#9380FF', // Background color for main container
+    justifyContent: 'flex-start', // Starts from the top of the container
+    alignItems: 'center',     // Centers content horizontally
+  },
+  headerPlaceHolder: {
+    height: '20%',          // Takes 20% of mainPlaceHolder height
+    width: '100%',          // Full width
+    flexDirection: 'row',   // Align header content horizontally
+    justifyContent: 'space-between', // Aligns header content to left and icon to right
+    alignItems: 'center',   // Centers content vertically
+    paddingTop: 40,         // Adds padding to top for better UI
+    paddingLeft: 30,        // Adds padding to the left for better UI
+    paddingRight: 30,       // Adds padding to the right for better UI
+    backgroundColor: '#9380FF',  // Customize color as needed
+  },
+  headerTextGroup: {
+    flexDirection: 'column',   // Stacks the headers vertically
+    alignItems: 'flex-start',    // Aligns text to the left
+  },
+  contentPlaceHolder: {
+    flex: 1,                // Takes remaining space inside mainPlaceHolder
+    width: '100%',          // Full width
     justifyContent: 'center',
     alignItems: 'center',
-    marginTop: 0,
-  },
-  header: {
-    marginTop: 30,
-    alignItems: 'center',
-    // backgroundColor: '#ebb268',
-  },
-  headerh1: {
-    fontSize: 22,
-    fontWeight: 'bold',
-    color: '#2d2d2d',
-  },
-  headerh2: {
-    fontSize: 16,
-    marginBottom: 20,
-    color: '#3d3d3d',
-  },
-  loadingText: {
-    fontSize: 16,
-    marginTop: 20,
-    color: 'darkred',
-  },
-  errorText: {
-    fontSize: 16,
-    marginTop: 20,
-    color: 'red',
-    textAlign: 'center',
+    backgroundColor: '#9380FF',  // Customize color as needed
   },
   scrollContainer: {
     flex: 1,
@@ -138,7 +231,7 @@ const styles = StyleSheet.create({
   },
   list: {
     padding: 12,
-    marginLeft: 10,
+    // marginLeft: 10,
     marginRight: 10,
     backgroundColor: '#efefef',
     marginTop: 15,
@@ -149,19 +242,52 @@ const styles = StyleSheet.create({
   listtext: {
     fontSize: 16,
   },
+  secondryPlaceHolder: {
+    flex: 0.5,       
+    backgroundColor: '#9380FF', // Customize this color
+    justifyContent: 'center',  // Centers content vertically
+    alignItems: 'center',      // Centers content horizontally
+  },
+  headerText: {
+    fontSize: 20,
+    fontWeight: 'bold',
+    color: '#fff',
+    textAlign: 'left',        // Aligns text to the left
+  },
+  secondaryHeaderText: {
+    fontSize: 18,
+    color: '#fff',
+    textAlign: 'left',        // Aligns text to the left
+    marginTop: 3,             // Space between the two headers
+  },
+  contentText: {
+    fontSize: 18,
+    color: '#fff',
+  },
   button: {
-    backgroundColor: 'black', // Match HomeScreen button color
-    padding: 12, // Similar padding as AppInfoScreen button
-    width: 300, // Match the width of the buttons in AppInfoScreen
-    borderRadius: 10,
-    textAlign: 'center',
-    marginBottom: 15, // Space between buttons
+    paddingVertical: 10,      // Reduced vertical padding for a more compact button
+    paddingHorizontal: 40,    // Reduced horizontal padding
+    height: 50,               // Reduced height for a more compact button
+    width: 250,               // Adjusted width for a more balanced appearance
+    backgroundColor: 'black',
+    borderRadius: 10,         // Rounded corners
+    marginBottom: 15,         // Space between button and content
+    justifyContent: 'center', // Vertically centers text
+    alignItems: 'center',     // Horizontally centers text
+    shadowColor: '#000',      // Adds shadow effect
+    shadowOffset: { width: 0, height: 2 },  // Slightly offset shadow
+    shadowOpacity: 0.1,       // Light shadow opacity
+    shadowRadius: 4,          // Soft shadow blur radius
+    elevation: 3,             // Adds elevation for Android
   },
   buttonText: {
     color: '#fff',
-    fontSize: 18, // Font size to match AppInfoScreen button text
+    fontSize: 16,             // Adjusted font size for better balance
+    fontWeight: 'bold',       // Bold text for better visibility
     textAlign: 'center',
   },
 });
 
-export default CouchPotatoScreen;
+export default YogaScreen;
+
+
