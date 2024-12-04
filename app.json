@@ -2,7 +2,7 @@
   "expo": {
     "name": "potata",
     "slug": "workout-mobile",
-    "version": "1.0.0",
+    "version": "1.1.2",
     "orientation": "portrait",
     "icon": "./assets/couch_potato.png",
     "userInterfaceStyle": "light",
@@ -19,7 +19,7 @@
         "foregroundImage": "./assets/couch_potato.png",
         "backgroundColor": "#ffffff"
       },
-      "package": "com.mamaboylay.workoutmobile"
+      "package": "com.yatyarzar.potata"
     },
     "web": {
       "favicon": "./assets/favicon.png"
